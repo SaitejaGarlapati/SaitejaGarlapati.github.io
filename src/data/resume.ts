@@ -54,12 +54,12 @@ export const systems: System[] = [
     status: "Running",
     featured: true,
     description:
-      "BareMetal as a Service: the Kubernetes control plane that turns " +
-      "racks of Intel hardware into provisionable compute. User-facing " +
-      "REST APIs backed by gRPC microservices handle provisioning and " +
-      "orchestration; cloud-init bootstrapping standardizes node OS " +
-      "configuration; OIDC, RBAC, namespaces, and resource quotas " +
-      "enforce multi-tenant isolation.",
+      "BareMetal as a Service. A customer asks for bare-metal or GPU " +
+      "machines through a REST API, and the control plane does the " +
+      "rest: gRPC microservices provision the hardware, cloud-init " +
+      "brings up the OS, and the operators here walk each node through " +
+      "its lifecycle. All of it multi-tenant, kept isolated with OIDC, " +
+      "RBAC, and quotas.",
     components: [
       {
         name: "instance-operator",
@@ -83,8 +83,8 @@ export const systems: System[] = [
     ai: true,
     description:
       "LLM serving on Intel hardware for internal customers. Models run " +
-      "on vLLM, SGLang, and Ollama (llama.cpp backend); a LiteLLM proxy " +
-      "gateway routes requests intelligently based on their complexity; " +
+      "on vLLM, SGLang, and Ollama with a llama.cpp backend, and a " +
+      "LiteLLM gateway routes each request based on its complexity. " +
       "Langfuse traces the LLM layer while Prometheus, Grafana, and ELK " +
       "watch the hardware underneath.",
     labels: ["vllm", "sglang", "ollama", "litellm", "langfuse", "prometheus", "grafana"],
