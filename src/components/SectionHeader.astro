@@ -1,0 +1,21 @@
+---
+/**
+ * Shared section heading: a mono "command" eyebrow above a large title —
+ * every section reads like the output of a kubectl query.
+ */
+interface Props {
+  /** the fake shell command shown above the title, without the `$` */
+  command: string;
+  title: string;
+}
+const { command, title } = Astro.props;
+---
+
+<div class="mb-10">
+  <p class="font-mono text-xs text-console-dim sm:text-sm" aria-hidden="true">
+    <span class="text-console-green">$</span> {command}
+  </p>
+  <h2 class="mt-2 font-mono text-2xl font-semibold tracking-tight text-console-bright sm:text-3xl">
+    {title}
+  </h2>
+</div>

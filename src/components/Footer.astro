@@ -1,0 +1,55 @@
+---
+/**
+ * Contact section + console status-bar footer.
+ */
+import { identity } from "../data/resume";
+import SectionHeader from "./SectionHeader.astro";
+
+const base = import.meta.env.BASE_URL;
+const year = new Date().getFullYear();
+---
+
+<section id="contact" class="reveal mx-auto max-w-6xl scroll-mt-20 px-5 py-16">
+  <SectionHeader command="kubectl port-forward engineer/saiteja-garlapati" title="Open a connection" />
+
+  <p class="max-w-xl text-base leading-relaxed text-console-text">
+    Building infrastructure for AI workloads, or just want to talk control
+    planes, GPUs, and the machinery that keeps them honest? Reach out.
+  </p>
+
+  <div class="mt-8 flex flex-col gap-3 font-mono text-sm sm:flex-row sm:flex-wrap sm:gap-4">
+    <a
+      href={`mailto:${identity.email}`}
+      class="border border-console-green bg-console-green/10 px-4 py-2.5 text-console-green no-underline transition-colors hover:bg-console-green/20"
+    >
+      {identity.email}
+    </a>
+    <a
+      href={identity.github}
+      class="border border-console-line px-4 py-2.5 text-console-text no-underline transition-colors hover:border-console-green hover:text-console-green"
+    >
+      github.com/SaitejaGarlapati
+    </a>
+    <a
+      href={identity.linkedin}
+      class="border border-console-line px-4 py-2.5 text-console-text no-underline transition-colors hover:border-console-green hover:text-console-green"
+    >
+      linkedin
+    </a>
+    <a
+      href={`${base}Saiteja_Garlapati_Resume.pdf`}
+      class="border border-console-line px-4 py-2.5 text-console-text no-underline transition-colors hover:border-console-green hover:text-console-green"
+    >
+      resume.pdf ↓
+    </a>
+  </div>
+</section>
+
+<footer class="mt-8 border-t border-console-line">
+  <div class="mx-auto max-w-6xl px-5 py-5 text-center font-mono text-xs text-console-dim">
+    <p>
+      <span class="status-dot mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-console-green align-middle" aria-hidden="true"></span>
+      status: Ready · © {year} {identity.name}
+    </p>
+  </div>
+</footer>

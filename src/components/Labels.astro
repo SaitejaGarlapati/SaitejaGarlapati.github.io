@@ -1,0 +1,33 @@
+---
+/**
+ * Skills as Kubernetes node labels — the literal way K8s declares what a
+ * node can do. Prefix (category) is dimmed; the value carries the weight.
+ */
+import { labels } from "../data/resume";
+import SectionHeader from "./SectionHeader.astro";
+---
+
+<section id="labels" class="reveal mx-auto max-w-6xl scroll-mt-20 px-5 py-16">
+  <SectionHeader
+    command="kubectl get node saiteja-garlapati -o jsonpath='{.metadata.labels}'"
+    title="Node labels"
+  />
+
+  <ul class="flex flex-wrap gap-2.5">
+    {
+      labels.flatMap((group) =>
+        group.values.map((value) => (
+          <li
+            class:list={[
+              "border border-console-line bg-console-raised/70 px-3 py-1.5 font-mono text-sm transition-colors",
+              group.ai ? "hover:border-console-cyan/50" : "hover:border-console-green/50",
+            ]}
+          >
+            <span class="text-console-dim">{group.prefix}/</span><span
+              class={group.ai ? "text-console-cyan" : "text-console-bright"}>{value}</span>
+          </li>
+        )),
+      )
+    }
+  </ul>
+</section>

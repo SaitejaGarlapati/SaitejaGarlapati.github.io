@@ -1,0 +1,74 @@
+---
+/**
+ * Career as a node lifecycle state machine — the same states BMaaS drives
+ * bare-metal nodes through, applied to the engineer. A vertical rail
+ * connects the phases; the current one pulses.
+ */
+import { lifecycle } from "../data/resume";
+import SectionHeader from "./SectionHeader.astro";
+
+/* Static class maps so Tailwind can see every class it needs to generate. */
+const dotColor: Record<string, string> = {
+  steel: "bg-console-steel",
+  cyan: "bg-console-cyan",
+  amber: "bg-console-amber",
+  green: "bg-console-green",
+};
+const textColor: Record<string, string> = {
+  steel: "text-console-steel",
+  cyan: "text-console-cyan",
+  amber: "text-console-amber",
+  green: "text-console-green",
+};
+const borderColor: Record<string, string> = {
+  steel: "border-console-steel/40",
+  cyan: "border-console-cyan/40",
+  amber: "border-console-amber/40",
+  green: "border-console-green/40",
+};
+---
+
+<section id="lifecycle" class="reveal mx-auto max-w-6xl scroll-mt-20 px-5 py-16">
+  <SectionHeader command="kubectl get engineer saiteja-garlapati -w" title="Lifecycle" />
+
+  <ol class="relative ml-2 border-l border-console-line">
+    {
+      lifecycle.map((entry) => (
+        <li class="relative pb-12 pl-8 last:pb-0 sm:pl-10">
+          {/* phase node on the rail */}
+          <span
+            class:list={[
+              "absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full",
+              dotColor[entry.color],
+              entry.current && "status-dot",
+            ]}
+            aria-hidden="true"
+          />
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-sm">
+            <span
+              class:list={[
+                "border px-2 py-0.5 text-xs font-semibold",
+                borderColor[entry.color],
+                textColor[entry.color],
+              ]}
+            >
+              {entry.phase}
+            </span>
+            <span class="text-console-dim">{entry.period}</span>
+            <span class="text-console-dim/70 italic" aria-hidden="true">
+              // {entry.note}
+            </span>
+          </div>
+
+          <h3 class="mt-3 font-semibold text-console-bright">{entry.role}</h3>
+          <p class="mt-0.5 text-sm text-console-dim">{entry.org}</p>
+
+          {entry.desc && (
+            <p class="mt-3 max-w-2xl text-sm leading-relaxed text-console-text">{entry.desc}</p>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</section>

@@ -1,0 +1,69 @@
+---
+/**
+ * The major systems from the resume, rendered as running workloads —
+ * a `kubectl get` you'd actually want to read. The featured system
+ * (BMaaS) spans the full row and lists its operators/services as a
+ * resource tree.
+ */
+import { systems } from "../data/resume";
+import SectionHeader from "./SectionHeader.astro";
+---
+
+<section id="systems" class="reveal mx-auto max-w-6xl scroll-mt-20 px-5 py-16">
+  <SectionHeader command="kubectl get workloads -n intel" title="Systems" />
+
+  <div class="grid gap-5 md:grid-cols-2">
+    {
+      systems.map((sys) => (
+        <article
+          class:list={[
+            "flex flex-col border border-console-line bg-console-raised/70 p-6 transition-colors",
+            sys.ai ? "hover:border-console-cyan/50" : "hover:border-console-green/50",
+            sys.featured && "md:col-span-2",
+          ]}
+        >
+          <div class="flex flex-wrap items-baseline justify-between gap-2">
+            <h3 class="font-mono text-base font-semibold text-console-bright">{sys.name}</h3>
+            <span class="flex items-center gap-1.5 font-mono text-xs text-console-green">
+              <span class="status-dot h-1.5 w-1.5 rounded-full bg-console-green" aria-hidden="true" />
+              {sys.status}
+            </span>
+          </div>
+          {/* cyan kind marks the AI layer; green/neutral is platform */}
+          <p class="mt-1 font-mono text-xs text-console-dim">
+            kind: <span class={sys.ai ? "text-console-cyan" : undefined}>{sys.kind}</span>
+          </p>
+
+          {/* featured card: description | component tree, side by side on desktop */}
+          <div class:list={["mt-4 flex-1", sys.components && "grid gap-6 md:grid-cols-2 md:gap-10"]}>
+            <p class="text-sm leading-relaxed text-console-text">{sys.description}</p>
+
+            {sys.components && (
+              <ul class="space-y-4" aria-label={`${sys.name} components`}>
+                {sys.components.map((c, i) => (
+                  <li class="flex gap-3">
+                    <span class="shrink-0 font-mono text-sm text-console-dim" aria-hidden="true">
+                      {i === sys.components.length - 1 ? "└─" : "├─"}
+                    </span>
+                    <div>
+                      <p class="font-mono text-sm font-semibold text-console-cyan">{c.name}</p>
+                      <p class="mt-1 text-sm leading-relaxed text-console-text">{c.role}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <ul class="mt-5 flex flex-wrap gap-2" aria-label={`${sys.name} technologies`}>
+            {sys.labels.map((label) => (
+              <li class="border border-console-line px-2 py-0.5 font-mono text-[11px] text-console-dim">
+                {label}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+</section>
